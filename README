@@ -1,0 +1,8 @@
+mysql_secure_installation is a script originally developed by MYSQL AB and
+Jeremy Cole at 2002. It wasn't make for automatizatic installation so I little
+bend it.
+
+TODO:
+- use getopts 
+- use -y option for saying YES on all questions
+
