@@ -217,12 +217,38 @@ cleanup() {
     rm -f $config $command
 }
 
+print_help() {
+cat << EOF
+Usage: $0 [OPTION]
+This program enables you to improve the security of your MySQL installation.
+Without any OPTION it runs in standard (and recomended) way.
 
+  -h, --help        display this help and exit
+  -n, --norootpw    don't check and ask for setup of new root password
+  -y, --yes         say 'yes' to all questios within root password
+                    
+Examples:
+  $0
+  $0 -y
+  $0 -n -y
+EOF
+
+exit 0
+}
 # The actual script starts here
 
 prepare
-find_mysql_client
+#find_mysql_client
 set_echo_compat
+
+# Get params
+while [ $# -ge 1 ] ; do
+    case $1 in
+        -h | --help) print_help;;
+        *)  echo "Error: Invalid option $1"; exit 1
+    esac
+    shift
+done
 
 echo
 echo
