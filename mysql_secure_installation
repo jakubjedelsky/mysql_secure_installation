@@ -238,7 +238,7 @@ exit 0
 # The actual script starts here
 
 prepare
-#find_mysql_client
+find_mysql_client
 set_echo_compat
 
 # Get params
