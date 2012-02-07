@@ -2,6 +2,9 @@ mysql_secure_installation is a script originally developed by MYSQL AB and
 Jeremy Cole at 2002. It wasn't make for automatizatic installation so I little
 bend it.
 
+Official webpage: 
+http://dev.mysql.com/doc/refman/5.6/en/mysql-secure-installation.html
+
 Usage: mysql_secure_installation [OPTION]
 This program enables you to improve the security of your MySQL installation.
 Without any OPTION it runs in standard (and recomended) way.
