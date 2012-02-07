@@ -25,6 +25,9 @@ rootpass=""
 echo_n=
 echo_c=
 
+YES=
+NOROOTPW=
+
 set_echo_compat() {
     case `echo "testing\c"`,`echo -n testing` in
 	*c*,-n*) echo_n=   echo_c=     ;;
@@ -245,6 +248,8 @@ set_echo_compat
 while [ $# -ge 1 ] ; do
     case $1 in
         -h | --help) print_help;;
+        -y | --yes)  YES=1;;
+        -n | --norootpw)    NOROOTPW=1;;
         *)  echo "Error: Invalid option $1"; exit 1
     esac
     shift
@@ -259,43 +264,46 @@ echo "      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!"
 echo
 echo
 
-echo "In order to log into MySQL to secure it, we'll need the current"
-echo "password for the root user.  If you've just installed MySQL, and"
-echo "you haven't set the root password yet, the password will be blank,"
-echo "so you should just press enter here."
-echo
+if [ -z $NOROOTPW ]; then
 
-get_root_password
-
-
-#
-# Set the root password
-#
-
-echo "Setting the root password ensures that nobody can log into the MySQL"
-echo "root user without the proper authorisation."
-echo
-
-if [ $hadpass -eq 0 ]; then
-    echo $echo_n "Set root password? [Y/n] $echo_c"
-else
-    echo "You already have a root password set, so you can safely answer 'n'."
+    echo "In order to log into MySQL to secure it, we'll need the current"
+    echo "password for the root user.  If you've just installed MySQL, and"
+    echo "you haven't set the root password yet, the password will be blank,"
+    echo "so you should just press enter here."
     echo
-    echo $echo_n "Change the root password? [Y/n] $echo_c"
-fi
 
-read reply
-if [ "$reply" = "n" ]; then
-    echo " ... skipping."
-else
-    status=1
-    while [ $status -eq 1 ]; do
-	set_root_password
-	status=$?
-    done
-fi
-echo
+    get_root_password
 
+
+    #
+    # Set the root password
+    #
+
+    echo "Setting the root password ensures that nobody can log into the MySQL"
+    echo "root user without the proper authorisation."
+    echo
+
+    if [ $hadpass -eq 0 ]; then
+        echo $echo_n "Set root password? [Y/n] $echo_c"
+    else
+        echo "You already have a root password set, so you can safely answer 'n'."
+        echo
+        echo $echo_n "Change the root password? [Y/n] $echo_c"
+    fi
+
+    read reply
+    if [ "$reply" = "n" ]; then
+        echo " ... skipping."
+    else
+        status=1
+        while [ $status -eq 1 ]; do
+    	set_root_password
+    	status=$?
+        done
+    fi
+    echo
+
+fi  # end of NOROOTPW
 
 #
 # Remove anonymous users
