@@ -316,9 +316,13 @@ echo "go a bit smoother.  You should remove them before moving into a"
 echo "production environment."
 echo
 
-echo $echo_n "Remove anonymous users? [Y/n] $echo_c"
+if [ -z $YES ] ; then
+    echo $echo_n "Remove anonymous users? [Y/n] $echo_c"
+    read reply
+else
+    reply='Y'
+fi
 
-read reply
 if [ "$reply" = "n" ]; then
     echo " ... skipping."
 else
@@ -335,8 +339,13 @@ echo "Normally, root should only be allowed to connect from 'localhost'.  This"
 echo "ensures that someone cannot guess at the root password from the network."
 echo
 
-echo $echo_n "Disallow root login remotely? [Y/n] $echo_c"
-read reply
+if [ -z $YES ] ; then
+    echo $echo_n "Disallow root login remotely? [Y/n] $echo_c"
+    read reply
+else
+    reply='Y'
+fi
+
 if [ "$reply" = "n" ]; then
     echo " ... skipping."
 else
@@ -354,8 +363,13 @@ echo "access.  This is also intended only for testing, and should be removed"
 echo "before moving into a production environment."
 echo
 
-echo $echo_n "Remove test database and access to it? [Y/n] $echo_c"
-read reply
+if [ -z $YES ] ; then
+    echo $echo_n "Remove test database and access to it? [Y/n] $echo_c"
+    read reply
+else
+    reply='Y'
+fi
+
 if [ "$reply" = "n" ]; then
     echo " ... skipping."
 else
@@ -372,8 +386,13 @@ echo "Reloading the privilege tables will ensure that all changes made so far"
 echo "will take effect immediately."
 echo
 
-echo $echo_n "Reload privilege tables now? [Y/n] $echo_c"
-read reply
+if [ -z $YES ] ; then
+    echo $echo_n "Reload privilege tables now? [Y/n] $echo_c"
+    read reply
+else
+    reply='Y'
+fi
+
 if [ "$reply" = "n" ]; then
     echo " ... skipping."
 else
